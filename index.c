@@ -2,9 +2,17 @@
 
 int main() {
     int menu;
-    int campoJogador[50], campoComputador[50]; // Tamanho maior para campo dinâmico
-    int naviosJogador = 0, naviosComputador = 0;
-    int i, novoCampo, novoNavio;
+    int campoJogador[15];
+    int campoComputador[15];
+
+    int naviosJogador = 0;
+    int naviosComputador = 0;
+
+    int i;
+    int novoCampo;
+    int novoNavio;
+    int navioMinimo = 4;
+    int campoMinimo = 15;
 
     // Exibir menu principal
     printf("Menu:\n");
@@ -18,45 +26,35 @@ int main() {
         case 1:
             printf("Novo Jogo\n");
             // Inicializar os campos com água desconhecida (7)
-            for (i = 0; i < 15; i++) {
+            for (i = 0; i < campoMinimo; i++) {
                 campoJogador[i] = 7;
                 campoComputador[i] = 7;
             }
-
-            // Posicionar os navios do jogador
-            for (i = 0; i < 15 && naviosJogador < 4; i += 3) {
-                if (i + 1 < 15) {
-                    campoJogador[i] = 1; // Primeira posição do navio
-                    campoJogador[i + 1] = 1; // Segunda posição do navio
-                    naviosJogador++;
-                }
-            }
-
-            // Posicionar os navios do computador
-            for (i = 0; i < 15 && naviosComputador < 4; i += 3) {
-                if (i + 1 < 15) {
-                    campoComputador[i] = 1; // Primeira posição do navio
-                    campoComputador[i + 1] = 1; // Segunda posição do navio
-                    naviosComputador++;
-                }
-            }
-
-            // Exibir o campo do jogador em formato de tabela (simulando 3x5)
+            // Exibir o campo do jogador 
             printf("Campo do Jogador:\n");
-            for (i = 0; i < 15; i++) {
+            for (i = 0; i < campoMinimo; i++) {
                 printf(" %d ", campoJogador[i]);
-                if ((i + 1) % 5 == 0) {
-                    printf("\n");
-                }
             }
 
-            // Exibir o campo do computador em formato de tabela (valores ocultos)
+
+           // Posicionamento dos navios
+          int posicao = 0; // Começa do início do array
+          for (i = 0; i < navioMinimo; i++) {
+            // Garante que há espaço suficiente para o navio e uma posição de separação
+          if (posicao + 1 < 15 && campoJogador[posicao] == 7 && campoJogador[posicao + 1] == 7) {
+          campoJogador[posicao] = 1;       // Primeira posição do navio
+          campoJogador[posicao + 1] = 1;   // Segunda posição do navio
+          posicao += 3;                   // Move para a próxima posição com 1 de espaço
+      }
+  }
+
+
+
+            // Exibir o campo do computador 
             printf("\nCampo do Computador:\n");
-            for (i = 0; i < 15; i++) {
-                printf(" 7 "); // Sempre exibe 7 para o jogador humano
-                if ((i + 1) % 5 == 0) {
-                    printf("\n");
-                }
+            for (i = 0; i < campoMinimo; i++) {
+                printf(" %d ", campoComputador[i]);
+                
             }
             break;
 
@@ -74,42 +72,15 @@ int main() {
                     campoJogador[i] = 7;
                     campoComputador[i] = 7;
                 }
-
-                // Posicionar os navios do jogador
-                int posicaoNavio = 0; // Contador para os navios do jogador
-                for (i = 0; i < novoCampo && posicaoNavio < novoNavio; i++) {
-                    if (i + 1 < novoCampo) {
-                    campoJogador[i] = 1;       // Primeira posição do navio
-                    campoJogador[i + 1] = 1;   // Segunda posição do navio
-                    posicaoNavio++; // Incrementa a quantidade de navios posicionados
-                    }
-                }
-
-                // Posicionar os navios do computador
-                int posicaoNavioPc = 0; // Contador para os navios do computador
-                for (i = 0; i < novoCampo && posicaoNavioPc < novoNavio; i++) {
-                    if (i + 1 < novoCampo) {
-                    campoComputador[i] = 1;       // Primeira posição do navio
-                    campoComputador[i + 1] = 1;   // Segunda posição do navio
-                        posicaoNavioPc++; // Incrementa a quantidade de navios posicionados
-                    }
-                }
-
                 // Exibir campos configurados
                 printf("Campo do Jogador:\n");
                 for (i = 0; i < novoCampo; i++) {
                     printf(" %d ", campoJogador[i]);
-                    if ((i + 1) % 5 == 0) { // Formatar a exibição como uma tabela 5xN
-                        printf("\n");
-                    }
                 }
 
                 printf("\nCampo do Computador:\n");
                 for (i = 0; i < novoCampo; i++) {
-                    printf(" 7 "); // Sempre exibe 7 para o computador
-                    if ((i + 1) % 5 == 0) { // Formatar a exibição como uma tabela 5xN
-                        printf("\n");
-                    }
+                    printf(" %d ", campoComputador[i]);
                 }
             } else {
                 printf("Valores inválidos! O tamanho do campo deve ser >= 15 e o número de navios deve ser >= 4.\n");
