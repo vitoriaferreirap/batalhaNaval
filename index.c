@@ -20,7 +20,10 @@ int main() {
     int navioMinimo = 4;
     int campoMinimo = 15;
     int jogadas[3];
+    int jogadasComputador[3];
 
+    int contadorNavioJogador = 0;
+    int contadorNavioComputador = 0;
 
     // Exibir menu principal
     printf("Menu:\n");
@@ -32,94 +35,185 @@ int main() {
 
     switch (menu) {
         case 1:
-            printf("Novo Jogo\n");
-            for (i = 0; i < campoMinimo; i++) {
-                campoJogador[i] = 7;
-                campoComputador[i] = 7;
-            }
-            printf("Campo do Jogador:\n");
-            for (i = 0; naviosJogador < navioMinimo; ) {  // Enquanto não tivermos 4 navios
-              int pos = rand() % 14;  // Gera uma posição aleatória entre 0 e 13
-              // Verifica se há espaço suficiente para colocar o navio
-              if (campoJogador[pos] == 7 && campoJogador[pos + 1] == 7) {
-                  // Verifica se as posições ao redor do navio estão livres (evita sobreposição e adjacência)
-                  if ((pos == 0 || campoJogador[pos - 1] == 7) && (pos + 2 >= campoMinimo || campoJogador[pos + 2] == 7)) {
-                      campoJogador[pos] = 1; 
-                      campoJogador[pos + 1] = 1; 
-                      naviosJogador++; // Incrementa o número de navios colocados
-                  }
-              }
+
+        
+          printf("Novo Jogo\n");
+          //inicializando cada posicao com o valor de 7 para COMPUTADOR E JOGADOR = aguas desconhecidas
+          for (i = 0; i < campoMinimo; i++) {
+              campoJogador[i] = 7;
+              campoComputador[i] = 7;
           }
-            for (i = 0; i < campoMinimo; i++) {
-                printf("%d ", campoJogador[i]);
+
+          /*CONFIGURAÇÃO DO CAMPO (JOGADOR)
+            -verificando as posicoes do campo do jogador para colocar os navios.
+            -imprimindo campo do jogador, já com os navios alocados
+              *rend coloca os navios em posicao aleatoria de 0-13
+              *o navio sera representado pelo valor (1)
+              *cada navio ocupa 2 posicoes do vetor.
+          */
+          printf("Campo do Jogador:\n");
+          for (i = 0; naviosJogador < navioMinimo; ) { 
+            int pos = rand() % 14;  
+            if (campoJogador[pos] == 7 && campoJogador[pos + 1] == 7) {
+                if ((pos == 0 || campoJogador[pos - 1] == 7) && (pos + 2 >= campoMinimo || campoJogador[pos + 2] == 7)) {
+                    campoJogador[pos] = 1; 
+                    campoJogador[pos + 1] = 1; 
+                    naviosJogador++; // Incrementa o número de navios colocados
+                }
             }
-            printf("\nCampo do Computador:\n");
-            // Colocando os navios no campo do computador
-            for (i = 0; naviosComputador < navioMinimo; ) {  // Enquanto não tivermos 4 navios
-            int pos = rand() % 14;  // Gera uma posição aleatória entre 0 e 13
-            // Verifica se há espaço suficiente para colocar o navio
+          }
+          for (i = 0; i < campoMinimo; i++) {
+              printf("%d ", campoJogador[i]);
+          }
+
+          /*CONFIGURAÇÃO DO CAMPO (COMPUTADOR)
+            -verificando as posicoes do campo do computador para colocar os navios.
+            -imprimindo campo do computaodr, já com os navios alocados
+              *rend coloca os navios em posicao aleatoria de 0-13
+              *o navio sera representado pelo valor (1)
+              *cada navio ocupa 2 posicoes do vetor.
+              *campo do computador, já esta com os navios alocados, mas deve aparecer com (7) para que não saibamos a posicao dos navios
+          */
+          printf("\nCampo do Computador:\n");
+          for (i = 0; naviosComputador < navioMinimo; ) {  
+          int pos = rand() % 14;  
             if (campoComputador[pos] == 7 && campoComputador[pos + 1] == 7) {
-            // Verifica se as posições ao redor do navio estão livres (evita sobreposição e adjacência)
-            if ((pos == 0 || campoComputador[pos - 1] == 7) && (pos + 2 >= campoMinimo || campoComputador[pos + 2] == 7)) {
-                campoComputador[pos] = 1; 
-                campoComputador[pos + 1] = 1; 
-                naviosComputador++; // Incrementa o número de navios colocados
-            }
-        }
-    }
-            for (i = 0; i < campoMinimo; i++) {
-                printf(" %d", campoComputador[i] );
-            }
-
-            // Lógica de jogadas
-            for (i = 0; i < 3; i++) {
-            printf("\nPor favor, escolha 3 números inteiros abaixo de 15:\n ");
-            printf("%da Jogada: \n", i + 1);
-            scanf("%d", &jogadas[i]);
+              if ((pos == 0 || campoComputador[pos - 1] == 7) && (pos + 2 >= campoMinimo || campoComputador[pos + 2] == 7)) {
+              campoComputador[pos] = 1; 
+              campoComputador[pos + 1] = 1; 
+              naviosComputador++; // Incrementa o número de navios colocados
           }
+      }
+          }
+          for (i = 0; i < campoMinimo; i++) {
+              printf(" 7");
+          }
+          printf("\n");
 
-            // Processando jogada
+      while(contadorNavioJogador < 8 && contadorNavioComputador < 8){
+
+          /*CONFIGURAÇÃO DE JOGADAS - JOGADOR
+            -Jogador ataca 3 vezes consecutivas o campo do computador
+            -Processamos as jogadas:
+              *verifica se a posicao está dentro dos limite.
+              *identificar se a posicao atual é == 1 se for verdade, significa que à um navio ali,
+                a posicao recebe o (*) para indicar que PARTE DO NAVIO foi atingido, a posicoes junto com
+                a mensagem IMPACTO é exibida.
+              *identificar se um navio foi completamente afundado, precisamos verificar se ambas as posições ocupadas pelo navio já foram atingidas ('*')
+              *identificar se a posicao atual for == 7 (aguas desconhecidas) aparece a posição, a mensagem AGUA, e o (x) é colocado.  
+              *identificar se algum dado for posto de forma errada : uma posição < 0, ou > 14, ou outros caracteres, jogador não perde a rodada (--i).
+              *campo do computador atualizado, apos as jogadas do adversario
+              *foi criado um contador (contadorNavioComputador) para incrementar toda vez que uma posicao for == (*), quando chegar ao falor todas de  8 posicoes, finalzia o jogo
+          */
+          for (i = 0; i < 3; i++) {
+          printf("\nPor favor, escolha 3 numeros inteiros abaixo de 15:\n ");
+          printf("%da Jogada: \n", i + 1);
+          scanf("%d", &jogadas[i]);
+          }
           for (i = 0; i < 3; i++) {
           int posicao = jogadas[i];
-
-          // Verificar se a posição está dentro dos limites
           if (posicao >= 0 && posicao < 15) {
-            if (campoComputador[posicao] == 1 ) { // O navio foi atingido
-                campoComputador[posicao] = '*'; // Marca como atingido
-                    printf("[%d] Impacto!\n", posicao); // O navio afundou
-                } else if (campoComputador[posicao] == 1 && campoComputador[posicao + 1] == 7) {
-                    campoComputador[posicao - 1] = '*'; // Marca a outra parte do navio como atingida
-                    printf("[%d, %d] Afundou!\n", posicao - 1, posicao); // O navio afundou
-                } else if (campoComputador[posicao] == 7) {
-                campoComputador[posicao] = 'x'; // Marca como água (sem navio)
-                printf("[%d] Água!\n", posicao); // Informando que a jogada foi na água
+            if (campoComputador[posicao] == 1 ) { 
+                campoComputador[posicao] = '*'; 
+                  printf("[%d] Impacto!\n", posicao);
+
+                  //ver se o navio foi COMPLETAMENTO atingido
+                  if((posicao > 0 && campoComputador[posicao - 1] == '*') || (posicao > 14 && campoComputador[posicao + 1] == '*')){
+                    printf("[%d, %d] Afundou!\n", posicao - 1, posicao);
+                  }
+
+            } else if ( campoComputador[posicao] == 7) {
+                  campoComputador[posicao] = 'x'; 
+              printf("[%d] Agua!\n", posicao); 
             } else if (campoComputador[posicao] == '*' || campoComputador[posicao] == 'x') {
-                printf("Posição já atingida!\n");
+              printf("Posição ja atingida!\n");
             }
-        } else {
-            printf("Dados incorretos. Informe um número entre 0 e 14\n");
-            i--; // O jogador não perde a jogada
+              } else {
+            printf("Dados incorretos. Informe um numero entre 0 e 14\n");
+          i--; 
         }
-    }
-
-
-
-
-
-
-            printf("\nCampo do computador atualizado: \n");
-            for (int i = 0; i < 15; i++) {
-    if (campoComputador[i] == '*') {
-        printf("* ");
-    } else if (campoComputador[i] == 'x') {
-        printf("x ");
-    } else {
-        printf("%d ", campoComputador[i]);
-    }
+          }  
+          printf("\nCampo do computador atualizado: \n");
+          for (int i = 0; i < 15; i++) {
+            if (campoComputador[i] == '*') {
+                contadorNavioComputador++;
+                printf("* ");
+            } else if (campoComputador[i] == 'x') {
+                printf("x ");
+            } else {
+                printf("%d ", campoComputador[i]);
             }
+          }
 
+          if(contadorNavioComputador == 8){
+            printf("Jogador ganhou!\n");
+            break;
+          }
 
+          /*CONFIGURAÇÃO DE JOGADAS - COMPUTADOR
+            -Computador ataca 3 vezes consecutivas o campo do jogador
+            -Processamos as jogadas:
+              *verifica se a posicao está dentro dos limite.
+              *ve se a posicao atual é == 1 se for verdade, significa que à um navio ali,
+                a posicao recebe o (*) para indicar que PARTE DO NAVIO foi atingido, a posicoes junto com
+                a mensagem IMPACTO é exibida.
+              *ve se a posisao atual e também a posterior é  == 1, se for verdadeiro, atingimos a segunda parte do navio,
+                aparece a posição e recebe o (*) e a mensagem AFUNDOU   .
+              *se a posicao atual for == 7 (aguas desconhecidas) aparece a posição, a mensagem AGUA, e o (x) é colocado.  
+              *se algum dado for posto de forma errada : uma posição < 0, ou > 14, ou outros caracteres, jogador não perde a rodada (--i).
+              *campo do jogador atualizado, apos as jogadas do adversario
+              *foi criado um contador (contadorNavioJogador) para incrementar toda vez que uma posicao for == (*), quando chegar ao falor todas de  8 posicoes, finalzia o jogo
 
+          */
+          printf("\nComputador esta jogando...\n");
+          for (int i = 0; i < 3; i++) {
+          jogadasComputador[i] = rand() % 14; 
+          printf("%da Jogada: %d\n", i + 1, jogadasComputador[i]);
+          }     
+          for (i = 0; i < 3; i++) {
+            int posicao = jogadasComputador[i];
+            if (posicao >= 0 && posicao < 15) {
+              if (campoJogador[posicao] == 1 ) { // O navio foi atingido
+                campoJogador[posicao] = '*'; // Marca como atingido
+                printf("[%d] Impacto!\n", posicao); // O navio afundou
+
+                 //ver se o navio foi COMPLETAMENTO atingido
+                if((posicao > 0 && campoJogador[posicao - 1] == '*') || (posicao > 14 && campoJogador[posicao + 1] == '*')){
+                  printf("[%d, %d] Afundou!\n", posicao - 1, posicao);
+                }
+
+            } else if (campoJogador[posicao] == 7) {
+              campoJogador[posicao] = 'x'; // Marca como água (sem navio)
+                printf("[%d] Agua!\n", posicao); // Informando que a jogada foi na água
+            } else if (campoJogador[posicao] == '*' || campoJogador[posicao] == 'x') {
+              printf("Posição ja atingida!\n");
+          }
+            } else {
+                printf("Dados incorretos. Informe um numero entre 0 e 14\n");
+                i--; // O jogador não perde a jogada
+            }
+          }
+          printf("\nCampo do jogador atualizado: \n");
+          //mostrar apenas com as jogadas do jogador!!MUDAR
+          for (int i = 0; i < 15; i++) {
+            if (campoJogador[i] == '*') {
+                contadorNavioJogador++;
+                printf("* ");
+            } else if (campoJogador[i] == 'x') {
+                printf("x ");
+            } else {
+                printf("%d ", campoJogador[i]);
+            }
+          }
+
+          if(contadorNavioJogador == 8){
+            printf("Computador ganhou!");
+            break;
+          }
+
+      }
+
+  
             break;
         case 2:
             printf("Configuracao do Jogo:\n");
