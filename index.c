@@ -90,8 +90,6 @@ int main() {
           }
           printf("\n");
 
-      while(contadorNavioJogador < 8 && contadorNavioComputador < 8){
-
           /*CONFIGURAÇÃO DE JOGADAS - JOGADOR
             -Jogador ataca 3 vezes consecutivas o campo do computador
             -Processamos as jogadas:
@@ -105,6 +103,8 @@ int main() {
               *campo do computador atualizado, apos as jogadas do adversario
               *foi criado um contador (contadorNavioComputador) para incrementar toda vez que uma posicao for == (*), quando chegar ao falor todas de  8 posicoes, finalzia o jogo
           */
+      while(contadorNavioJogador < 8 && contadorNavioComputador < 8){
+
           for (i = 0; i < 3; i++) {
           printf("\nPor favor, escolha 3 numeros inteiros abaixo de 15:\n ");
           printf("%da Jogada: \n", i + 1);
@@ -116,9 +116,10 @@ int main() {
             if (campoComputador[posicao] == 1 ) { 
                 campoComputador[posicao] = '*'; 
                   printf("[%d] Impacto!\n", posicao);
+                  contadorNavioComputador++;
 
                   //ver se o navio foi COMPLETAMENTO atingido
-                  if((posicao > 0 && campoComputador[posicao - 1] == '*') || (posicao > 14 && campoComputador[posicao + 1] == '*')){
+                  if((posicao > 0 && campoComputador[posicao - 1] == '*') || posicao < 14 && (campoComputador[posicao + 1] == '*')){ //NAO AO MESMO TEMPO POR ISSO ||
                     printf("[%d, %d] Afundou!\n", posicao - 1, posicao);
                   }
 
@@ -126,7 +127,7 @@ int main() {
                   campoComputador[posicao] = 'x'; 
               printf("[%d] Agua!\n", posicao); 
             } else if (campoComputador[posicao] == '*' || campoComputador[posicao] == 'x') {
-              printf("Posição ja atingida!\n");
+              printf("Posicao ja atingida!\n");
             }
               } else {
             printf("Dados incorretos. Informe um numero entre 0 e 14\n");
@@ -136,14 +137,14 @@ int main() {
           printf("\nCampo do computador atualizado: \n");
           for (int i = 0; i < 15; i++) {
             if (campoComputador[i] == '*') {
-                contadorNavioComputador++;
                 printf("* ");
             } else if (campoComputador[i] == 'x') {
                 printf("x ");
             } else {
-                printf("%d ", campoComputador[i]);
+                printf("7 ");
             }
           }
+          printf("\n");
 
           if(contadorNavioComputador == 8){
             printf("Jogador ganhou!\n");
@@ -176,6 +177,7 @@ int main() {
               if (campoJogador[posicao] == 1 ) { // O navio foi atingido
                 campoJogador[posicao] = '*'; // Marca como atingido
                 printf("[%d] Impacto!\n", posicao); // O navio afundou
+                contadorNavioJogador++;
 
                  //ver se o navio foi COMPLETAMENTO atingido
                 if((posicao > 0 && campoJogador[posicao - 1] == '*') || (posicao > 14 && campoJogador[posicao + 1] == '*')){
@@ -186,7 +188,7 @@ int main() {
               campoJogador[posicao] = 'x'; // Marca como água (sem navio)
                 printf("[%d] Agua!\n", posicao); // Informando que a jogada foi na água
             } else if (campoJogador[posicao] == '*' || campoJogador[posicao] == 'x') {
-              printf("Posição ja atingida!\n");
+              printf("Posicao ja atingida!\n");
           }
             } else {
                 printf("Dados incorretos. Informe um numero entre 0 e 14\n");
@@ -197,7 +199,6 @@ int main() {
           //mostrar apenas com as jogadas do jogador!!MUDAR
           for (int i = 0; i < 15; i++) {
             if (campoJogador[i] == '*') {
-                contadorNavioJogador++;
                 printf("* ");
             } else if (campoJogador[i] == 'x') {
                 printf("x ");
@@ -273,4 +274,4 @@ int main() {
     }
 
     return 0;
-}
+  }
