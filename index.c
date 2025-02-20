@@ -5,23 +5,24 @@ int main() {
   int menu;
   int campoJogador[15];
   int campoComputador[15];
+  int navioMinimo = 4;
+  int campoMinimo = 15;
 
   int campoNovoJogador[30];
   int campoNovoComputador[30];
-
   int naviosJogador = 0;
   int naviosComputador = 0;
 
   int i;
   int novoCampo;
   int novoNavio;
-  int navioMinimo = 4;
-  int campoMinimo = 15;
+  
   int jogadas[3];
   int jogadasComputador[3];
 
   int contadorNavioJogador = 0;
   int contadorNavioComputador = 0;
+  
   int contadorNovoNavioJogador = 0;
   int contadorNovoNavioComputador = 0;
 
