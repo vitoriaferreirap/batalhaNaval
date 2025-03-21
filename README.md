@@ -1,13 +1,6 @@
-# UTFPR
-## ENGENHARIA DE SOFTWARE
-### ALGORITMOS I - TRABALHO PRÁTICO
-
-
-
+# UTFPR - ENGENHARIA DE SOFTWARE - ALGORITMOS I - TRABALHO PRÁTICO
 ## 1. TRABALHO PRÁTICO - JOGO DE BATALHA NAVAL
-
 ### 1.1 INTRODUÇÃO
-
 - O jogo de batalha naval consiste em um jogo de dois jogadores competindo entre si para afundar todas as embarcações do adversário;
 - Cada jogador possui um campo aquático composto por diversas células;
 - Cada célula pode ter somente água, uma embarcação ou parte de uma embarcação;
