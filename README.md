@@ -20,4 +20,4 @@
 - Durante o jogo, os campos do jogador humano e do computador devem ser atualizados e exibidos em tela. Cada campo deve estar devidamente identificado;
 - Para cada bombardeio, deve ser exibida uma mensagem de acordo com as regras anteriores. Além disso, o valor no vetor que representa os campos deve ser alterado para cada uma das situações (Afundou, Impacto e Água);
 - Após a vitória ou derrota do jogador humano, o jogo deve informar se o jogador humano venceu ou perdeu. Além disso, deve fornecer opções para jogar novamente, voltar ao menu principal ou sair do jogo;
-- Deve fornecer uma opção para encerrar o jogo durante os turnos do jogador humano.
+- Deve fornecer uma opção para encerrar o jogo durante os turnos do jogador humano;
